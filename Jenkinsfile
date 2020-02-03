@@ -1,6 +1,6 @@
-pipeline {
+def customImage;
 
-    def customImage;
+pipeline {    
 	
 	tools {
 	
