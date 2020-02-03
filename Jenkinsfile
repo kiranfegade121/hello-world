@@ -21,7 +21,7 @@ pipeline {
 			
 			    script {
 						// This step should not normally be used in your script. Consult the inline help for details.
-					withDockerRegistry(credentialsId: 'docker-hub-cred', toolName: 'Docker', url: 'https://registry.hub.docker.com') {
+					withDockerRegistry(credentialsId: 'docker-hub-cred', url: 'https://registry.hub.docker.com') {
 						def customImage = docker.build("amitfegade121/hello-world:2.0")
 						customImage.push();
 					}
