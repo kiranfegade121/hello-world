@@ -1,6 +1,7 @@
-def customImage;
 
-pipeline {    
+pipeline {
+
+    agent any    
 	
 	tools {
 	
@@ -15,18 +16,20 @@ pipeline {
 			}
 		}
 		
-		stage('build image') {
+		stage('build image and push an image') {
 			steps {
-					customImage = docker.build("amitfegade121/hello-world:v2")
+			
+			    script {
+						// This step should not normally be used in your script. Consult the inline help for details.
+					withDockerRegistry(credentialsId: 'docker-hub-cred', toolName: 'Docker', url: 'https://registry.hub.docker.com') {
+						def customImage = docker.build("amitfegade121/hello-world:2.0")
+						customImage.push();
+					}
+				}
+				
 			}
 		}		
 		
-		stage('push an image') {
-			steps {
-				docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-cred') {
-					customImage.push()
-				}
-			}
-		}
+		
 	}
 }	
